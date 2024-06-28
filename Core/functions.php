@@ -1,4 +1,7 @@
 <?php
+
+use Core\Response;
+
 function dd($value) //dump and die
 {
     echo "

@@ -1,4 +1,7 @@
 <?php
+
+namespace Core;
+
 class Response
 {
     const OK = 200;
