@@ -24,35 +24,33 @@ if (!empty($errors)) {
     ]);
 }
 
+//check if email already exists
 $db = App::resolve(Database::class);
 
 $user = $db->query("SELECT * FROM users WHERE email = :email", [
     'email' => $email
 ])->find();
 
+//if yes redirect to login
+//if no then create account and log user in and redirect
 
-if (!is_bool($user)) {
-    $errors['email'] = "E-mail already exists";
+if ($user) {
+    //redirect to login (will come)
+    header("Location: /");
+    exit();
+} else {
 
-    return view('registration/create.view.php', [
-        'errors' => $errors,
-        'email' => $email
+
+    $db->query("INSERT INTO users (email, password) VALUES (:email, :password)", [
+        'email' => $email,
+        'password' => $password
     ]);
+
+    // mark that user is logged in
+    $_SESSION['user'] = [
+        'email' => $email
+    ];
+
+    header("Location: /");
+    exit();
 }
-
-$db->query("INSERT INTO users (email, password) VALUES (:email, :password)", [
-    'email' => $email,
-    'password' => password_hash($password, PASSWORD_DEFAULT)
-]);
-
-$_SESSION['user'] = $db->query("SELECT * FROM users WHERE email = :email", [
-    'email' => $email
-])->find()['email'];
-
-header("Location: /notes");
-die();
-    
-//check if email already exists
-    //if yes redirect to login
-
-    //if no then create account and log user in and redirect
