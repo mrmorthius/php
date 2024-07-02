@@ -32,6 +32,7 @@ $user = $db->query("SELECT * FROM users WHERE email = :email", [
 ])->find();
 
 //if yes redirect to login
+
 //if no then create account and log user in and redirect
 
 if ($user) {
@@ -43,7 +44,7 @@ if ($user) {
 
     $db->query("INSERT INTO users (email, password) VALUES (:email, :password)", [
         'email' => $email,
-        'password' => $password
+        'password' => password_hash($password, PASSWORD_BCRYPT)
     ]);
 
     // mark that user is logged in
