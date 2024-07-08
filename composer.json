@@ -1,0 +1,16 @@
+{
+  "name": "morten/demo",
+  "authors": [
+    {
+      "name": "Morthius",
+      "email": "morten_2104@hotmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Core\\": "Core/",
+      "Http\\": "Http/"
+    }
+  }
+}
